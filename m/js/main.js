@@ -36,6 +36,39 @@ let view = {
 
 let selectedId = null;
 
+/* ===== Pinch zoom (mobile) ===== */
+let pinch = null;
+
+function getDist(t1, t2){
+  const dx = t1.clientX - t2.clientX;
+  const dy = t1.clientY - t2.clientY;
+  return Math.hypot(dx, dy);
+}
+
+function installPinchZoom(el){
+  el.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 2) {
+      pinch = {
+        startDist: getDist(e.touches[0], e.touches[1]),
+        startScale: view.scale
+      };
+    }
+  }, { passive: false });
+
+  el.addEventListener("touchmove", (e) => {
+    if (pinch && e.touches.length === 2) {
+      e.preventDefault();
+      const dist = getDist(e.touches[0], e.touches[1]);
+      const ratio = dist / pinch.startDist;
+      setZoom(pinch.startScale * ratio);
+    }
+  }, { passive: false });
+
+  el.addEventListener("touchend", () => {
+    pinch = null;
+  });
+}
+
 /* ===== init ===== */
 boot();
 
@@ -73,6 +106,18 @@ function boot(){
   if (me) select(me.id);
 }
 
+installPinchZoom(mapEl);
+
+/* iOS Safari page zoom suppression */
+["gesturestart","gesturechange","gestureend"].forEach(type=>{
+  mapEl.addEventListener(type, e=>e.preventDefault(), {passive:false});
+});
+
+// iOS Safari: ページ全体のピンチズームを抑制（アプリ内ズームに回す）
+["gesturestart", "gesturechange", "gestureend"].forEach(type => {
+  mapEl.addEventListener(type, (e) => e.preventDefault(), { passive: false });
+});
+
 function makeDefaultData(){
   const now = nowISO();
   const meId = makeId();
@@ -92,78 +137,6 @@ function makeDefaultData(){
     createdAt: now,
     updatedAt: now,
   });
-
-// --- Pinch zoom (mobile) ---
-let pinch = null;
-
-function getDist(t1, t2){
-  const dx = t1.clientX - t2.clientX;
-  const dy = t1.clientY - t2.clientY;
-  return Math.hypot(dx, dy);
-}
-
-function installPinchZoom(el){
-  el.addEventListener("touchstart", (e) => {
-    if (e.touches.length === 2) {
-      pinch = {
-        startDist: getDist(e.touches[0], e.touches[1]),
-        startScale: view.scale
-      };
-    }
-  }, { passive: false });
-
-  el.addEventListener("touchmove", (e) => {
-    if (pinch && e.touches.length === 2) {
-      e.preventDefault(); // ページ拡大を抑制
-      const dist = getDist(e.touches[0], e.touches[1]);
-      const ratio = dist / pinch.startDist;
-      setZoom(pinch.startScale * ratio);
-    }
-  }, { passive: false });
-
-  el.addEventListener("touchend", (e) => {
-    if (e.touches.length < 2) pinch = null;
-  });
-}
-
-installPinchZoom(document.getElementById("map"));
-
-  // categories: random-ish around me (NOT uniform)
-  for (const c of DEFAULT_CATEGORIES){
-    const id = makeId();
-    const ang = rand(0, Math.PI * 2);
-    const radius = rand(180, 320);
-    const jitter = rand(-70, 70);
-
-    nodes.push({
-      id,
-      title: c,
-      notes: "",
-      priority: 1,
-      parentId: meId,
-      x: Math.cos(ang) * radius + rand(-jitter, jitter),
-      y: Math.sin(ang) * radius + rand(-jitter, jitter),
-      lockedTitle: true,     // ✅ category名を無意識に変えさせない
-      completed: false,
-      isMe: false,
-      isCategory: true,
-      createdAt: now,
-      updatedAt: now,
-    });
-  }
-
-  return {
-    nodes,
-    view: { scale: 0.80, ox: 0, oy: 0 },
-    updatedAt: now,
-  };
-}
-
-function saveAll(reason){
-  data.view = { ...view };
-  data.updatedAt = nowISO();
-  saveData(data);
-}
 
 /* ===== helpers ===== */
 function showToast(msg){

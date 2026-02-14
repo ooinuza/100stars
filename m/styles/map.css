@@ -310,6 +310,11 @@
 
 /* ===== Mobile ===== */
 @media (max-width: 640px){
+  #map{
+    touch-action: none;              /* ブラウザのピンチ/スクロール制御を抑制 */
+    overscroll-behavior: none;
+  }
+}
 
   .layout{
     grid-template-columns: 1fr;
