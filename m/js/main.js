@@ -93,6 +93,41 @@ function makeDefaultData(){
     updatedAt: now,
   });
 
+// --- Pinch zoom (mobile) ---
+let pinch = null;
+
+function getDist(t1, t2){
+  const dx = t1.clientX - t2.clientX;
+  const dy = t1.clientY - t2.clientY;
+  return Math.hypot(dx, dy);
+}
+
+function installPinchZoom(el){
+  el.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 2) {
+      pinch = {
+        startDist: getDist(e.touches[0], e.touches[1]),
+        startScale: view.scale
+      };
+    }
+  }, { passive: false });
+
+  el.addEventListener("touchmove", (e) => {
+    if (pinch && e.touches.length === 2) {
+      e.preventDefault(); // ページ拡大を抑制
+      const dist = getDist(e.touches[0], e.touches[1]);
+      const ratio = dist / pinch.startDist;
+      setZoom(pinch.startScale * ratio);
+    }
+  }, { passive: false });
+
+  el.addEventListener("touchend", (e) => {
+    if (e.touches.length < 2) pinch = null;
+  });
+}
+
+installPinchZoom(document.getElementById("map"));
+
   // categories: random-ish around me (NOT uniform)
   for (const c of DEFAULT_CATEGORIES){
     const id = makeId();
