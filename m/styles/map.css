@@ -1,3 +1,5 @@
+.layout{ outline: 6px solid hotpink !important; }
+
 /* ===== Top bar ===== */
 .topbar{
   position:fixed;
@@ -323,7 +325,5 @@
 
 /* 星屑 < world（線と星） */
 .world{ z-index:1; }
-
-.layout{ outline: 6px solid hotpink !important; }
 
 .layout{ grid-template-columns: 1fr !important; }
