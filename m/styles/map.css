@@ -326,22 +326,46 @@
     overflow: auto;
   }
 
-  .hint{
+    .hint{
     position: absolute;
     left: 14px;
     right: 14px;
-    bottom: 18px;
-    top: auto;
+    bottom: 14px;
+    top: auto !important;
+
+    display: inline-block;
+    width: auto !important;
+    max-width: calc(100% - 28px);
+
+    padding: 6px 8px;
+    border-radius: 10px;
+
+    font-size: 12px;
+    line-height: 1.2;
+    text-align: left;
+
+    background: rgba(0,0,0,.18) !important;
+    backdrop-filter: blur(6px);
+
+    height: auto !important;
   }
 
   .copyright{
     position: absolute;
-    left: 14px;
-    right: auto;
-    bottom: 4px;
-    top: auto;
-  }
+    left: 14px !important;
+    right: unset !important;
+    bottom: -2px;          /* hintの“下”に出す */
+    top: auto !important;
 
+    display: block;
+    width: auto;
+
+    font-size: 11px;
+    line-height: 1.2;
+    text-align: left;
+    opacity: .45;
+  }
+  
   .zoomBox{
     transform: scale(.92);
     transform-origin: right bottom;
