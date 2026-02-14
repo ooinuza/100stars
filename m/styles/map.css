@@ -55,9 +55,9 @@
 .layout{
   height:100%;
   display:grid;
-  grid-template-columns: 1fr 360px;
-  gap: 14px;
-  padding: 120px 14px 14px; /* ← 76px から増やす */
+  grid-template-columns: 1fr; /* ← 1カラム化 */
+  gap: 12px;
+  padding: 100px 12px 12px; /* 少し圧縮 */
 }
 
 #map {
