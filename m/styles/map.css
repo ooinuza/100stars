@@ -330,92 +330,37 @@
 
 .layout{ grid-template-columns: 1fr !important; }
 
-/* ===== Mobile layout overrides ===== */
+/* ===== Mobile (single source of truth) ===== */
 @media (max-width: 640px){
-
-  /* 1カラムにする */
   .layout{
-    grid-template-columns: 1fr !important;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 38vh auto;   /* 上：マップ / 下：パネル */
     gap: 10px;
-    padding: 96px 12px 12px; /* topbar分だけ残す */
-  }
-
-  /* 右パネルを“下のカード”にする */
-  .panel{
-    width: 100%;
-    max-width: none;
-    border-radius: 18px;
-  }
-
-  /* mapを最低限見える高さに */
-  #map{
-    height: 44vh;   /* 上はマップ、下はパネル */
-    min-height: 280px;
-  }
-
-  /* topbar内の右上ボタン詰まり対策 */
-  .topbar{
-    align-items: center;
-  }
-
-  /* ロゴが大きいときの折り返し・詰まり対策 */
-  .brand .logo{
-    font-size: 34px; /* clampを使ってるなら不要 */
-  }
-  .subtitle{
-    font-size: 11px;
-  }
-
-  /* hint / copyright がボタンと干渉しがちなので少し上げる */
-  .hint{ bottom: 54px; }
-  .copyright{ bottom: 54px; }
-
-  /* ズームUIは右下固定のままでOKだが、少し小さくして圧を下げる */
-  .zoomBox{
-    transform: scale(.92);
-    transform-origin: right bottom;
-  }
-}
-
-@media (max-width: 640px){
-  .panel{
-    max-height: 48vh;
-    overflow: auto;
-  }
-}
-
-@media (max-width: 640px){
-  /* 1列 + 2行（上=マップ / 下=パネル）を確定させる */
-  .layout{
-    grid-template-columns: 1fr !important;
-    grid-template-rows: 42vh auto !important;
+    padding: 96px 12px 12px;        /* topbar分 */
     align-content: start;
   }
 
-  /* マップは行いっぱいに広げる（vh指定と喧嘩しない） */
+  /* マップ領域を確実に確保 */
   #map{
-    height: 100% !important;
-    min-height: 0 !important;
+    height: 100%;
+    min-height: 220px;
   }
 
-  /* パネルが長いので、下半分だけスクロール */
+  /* パネルは下でスクロール */
   .panel{
-    max-height: 58vh;
-    overflow: auto;
-  }
-}
-
-@media (max-width: 640px){
-  #map{ outline: 3px solid rgba(0,255,255,.9); }
-}
-
-@media (max-width: 640px){
-  .layout{
-    grid-template-columns: 1fr !important;
-    grid-template-rows: 40vh auto !important; /* 上:マップ / 下:パネル */
+    max-height: none;               /* map.css側で固定しない */
   }
 
-  #map{
-    min-height: 240px !important;
+  /* hint/copyright はマップ内に居るので少し上げる */
+  .hint, .copyright{
+    bottom: 54px;
+  }
+
+  /* ズームUIは少し小さく */
+  .zoomBox{
+    transform: scale(.92);
+    transform-origin: right bottom;
   }
 }
