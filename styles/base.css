@@ -1,0 +1,101 @@
+:root{
+  --bg1:#070b18;
+  --bg2:#0b1230;
+  --bg3:#0f1b3f;
+
+  --panel: rgba(255,255,255,.06);
+  --panel2: rgba(255,255,255,.08);
+  --border: rgba(255,255,255,.12);
+  --text: #e9eeff;
+  --muted: rgba(233,238,255,.65);
+
+  --shadow: 0 18px 40px rgba(0,0,0,.45);
+
+  --btn: rgba(255,255,255,.08);
+  --btnHover: rgba(255,255,255,.12);
+
+  --accent: #7aa2ff;
+  --danger: rgba(255,80,120,.18);
+  --dangerBorder: rgba(255,80,120,.28);
+
+  --me1:#2f6bff;
+  --me2:#57b3ff;
+
+  --p1:#ffffff;
+  --p2:#fff6c5;
+  --p3:#ffeb77;
+  --p4:#ffd700;
+  --p5:#ffd3d4;
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 700px at 55% 30%, rgba(120,160,255,.18), transparent 55%),
+    radial-gradient(900px 600px at 20% 70%, rgba(120,160,255,.10), transparent 60%),
+    linear-gradient(to bottom, var(--bg1), var(--bg2) 55%, var(--bg3));
+  overflow:hidden;
+}
+
+.meta{ color: var(--muted); font-size: 13px; }
+
+/* ===== Buttons (shared) ===== */
+.btn{
+  border: 1px solid rgba(255,255,255,.12);
+  background: var(--btn);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  user-select:none;
+}
+.btn:hover{ background: var(--btnHover); }
+.btn.primary{
+  background: rgba(122,162,255,.20);
+  border-color: rgba(122,162,255,.30);
+}
+.btn.danger{
+  background: var(--danger);
+  border-color: var(--dangerBorder);
+}
+.btn.ghost{
+  background: rgba(0,0,0,.16);
+  border-color: rgba(255,255,255,.14);
+}
+.btn.icon{
+  width: 34px;
+  height: 34px;
+  padding:0;
+  border-radius: 999px;
+}
+.wide{ width:100%; }
+
+/* ===== Toast (shared) ===== */
+.toast{
+  position:absolute;
+  right: 14px;
+  bottom: 14px;
+  background: rgba(255,120,150,.14);
+  border: 1px solid rgba(255,120,150,.25);
+  padding: 10px 12px;
+  border-radius: 12px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: .18s ease;
+  color: rgba(255,235,245,.95);
+  pointer-events:none;
+}
+.toast.show{
+  opacity: 1;
+  transform: translateY(0);
+}
