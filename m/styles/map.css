@@ -1,6 +1,3 @@
-body{ background: #ff00ff !important; }
-.layout{ outline: 6px solid hotpink !important; }
-
 /* ===== Top bar ===== */
 .topbar{
   position:fixed;
