@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>100 Stars ✦ List</title>
+  <link rel="stylesheet" href="./styles/base.css">
+<link rel="stylesheet" href="./styles/list.css">
+</head>
+<body class="listBody">
+
+  <header class="listTop">
+    <div>
+      <div class="logo">100 Stars <span class="logoStar">✦</span> List</div>
+      <div class="subtitle">— Before I Die —</div>
+    </div>
+
+   <div class="listControls">
+  <div class="listActions">
+    <button class="btn ghost" id="exportCsvBtn" type="button">Export CSV</button>
+    <a class="btn ghost" href="./index.html">Back to Map</a>
+  </div>
+
+  <div class="controlGroup">
+    <label class="miniLabel">Sort</label>
+    <select id="sortSelect">
+      <option value="priority_desc">Priority (high → low)</option>
+      <option value="priority_asc">Priority (low → high)</option>
+      <option value="created_desc">Created (new → old)</option>
+      <option value="created_asc">Created (old → new)</option>
+      <option value="title_asc">Title (A → Z)</option>
+      <option value="title_desc">Title (Z → A)</option>
+    </select>
+  </div>
+</div>
+
+  </header>
+
+  <div class="listSearch">
+    <input id="searchInput" type="text" placeholder="Search title / notes" />
+    <div class="meta" id="countText">0 items</div>
+  </div>
+
+  <div class="tableWrap" id="tableWrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width:34%;">Title</th>
+          <th style="width:18%;">Category</th>
+          <th style="width:10%;">Priority</th>
+          <th style="width:8%;">Done</th>
+          <th>Notes</th>
+          <th style="width:14%;">Created</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <script type="module" src="./js/list.js"></script>
+</body>
+</html>
