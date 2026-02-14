@@ -383,3 +383,28 @@
     overflow: auto;
   }
 }
+
+@media (max-width: 640px){
+  /* 1列 + 2行（上=マップ / 下=パネル）を確定させる */
+  .layout{
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 42vh auto !important;
+    align-content: start;
+  }
+
+  /* マップは行いっぱいに広げる（vh指定と喧嘩しない） */
+  #map{
+    height: 100% !important;
+    min-height: 0 !important;
+  }
+
+  /* パネルが長いので、下半分だけスクロール */
+  .panel{
+    max-height: 58vh;
+    overflow: auto;
+  }
+}
+
+@media (max-width: 640px){
+  #map{ outline: 3px solid rgba(0,255,255,.9); }
+}
