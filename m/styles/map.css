@@ -244,14 +244,43 @@
 #wires { z-index: 1; }
 #nodes { z-index: 2; }
 
-/* コピーライト */
-.copyright{
-  position:absolute;
-  right:14px;
-  bottom:12px;
-  font-size:11px;
-  color: rgba(233,238,255,.45);
-  letter-spacing:.08em;
-  z-index:5;
-  pointer-events:none;
+/* ===== Mobile hint/copyright (lock) ===== */
+@media (max-width: 640px){
+
+  #map{ position: relative; }
+
+  .hint{
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 18px;
+    top: auto !important;
+
+    display: inline-block;
+    width: auto !important;
+    max-width: calc(100% - 28px);
+
+    font-size: 11px;
+    line-height: 1.15;
+    opacity: .65;
+    text-align: left;
+
+    padding: 4px 6px;
+    border-radius: 10px;
+    background: rgba(0,0,0,.16);
+    backdrop-filter: blur(6px);
+  }
+
+  .copyright{
+    position: absolute;
+    left: 14px !important;
+    right: unset !important;
+    bottom: 4px;
+    top: auto !important;
+
+    font-size: 11px;
+    line-height: 1.15;
+    opacity: .45;
+    text-align: left;
+  }
 }

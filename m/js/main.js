@@ -35,6 +35,9 @@ let view = {
 
 let selectedId = null;
 
+// Mobile pinch state (used to avoid pointer-gesture conflicts)
+let isPinching = false;
+
 /* ===== init ===== */
 boot();
 
@@ -587,3 +590,71 @@ function screenToWorld(clientX, clientY){
   return { x, y };
 }
 
+
+
+/* ===== Mobile pinch zoom ===== */
+function suppressIOSPageZoom(){
+  // iOS Safari sometimes treats pinch as a page gesture. These WebKit events help suppress that.
+  // (They are non-standard, but safe: other browsers just ignore them.)
+  ["gesturestart","gesturechange","gestureend"].forEach(type => {
+    document.addEventListener(type, (e) => {
+      e.preventDefault();
+    }, { passive: false });
+  });
+
+  // Also prevent double-tap-to-zoom on iOS (best-effort).
+  let lastTouchEnd = 0;
+  document.addEventListener("touchend", (e) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+      e.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, { passive: false });
+}
+
+function installPinchZoom(el){
+  let startDist = 0;
+  let startScale = 1;
+
+  function dist(t1, t2){
+    const dx = t1.clientX - t2.clientX;
+    const dy = t1.clientY - t2.clientY;
+    return Math.hypot(dx, dy);
+  }
+
+  el.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 2) {
+      // Start pinching: stop the browser from turning this into page-zoom.
+      e.preventDefault();
+      isPinching = true;
+
+      startDist = dist(e.touches[0], e.touches[1]);
+      startScale = view.scale;
+    }
+  }, { passive: false });
+
+  el.addEventListener("touchmove", (e) => {
+    if (!isPinching) return;
+    if (e.touches.length !== 2) return;
+
+    e.preventDefault();
+    const d = dist(e.touches[0], e.touches[1]);
+    if (!startDist) return;
+
+    const ratio = d / startDist;
+    setZoom(startScale * ratio);
+  }, { passive: false });
+
+  el.addEventListener("touchend", (e) => {
+    if (e.touches.length < 2) {
+      isPinching = false;
+      startDist = 0;
+    }
+  }, { passive: false });
+
+  el.addEventListener("touchcancel", () => {
+    isPinching = false;
+    startDist = 0;
+  }, { passive: false });
+}
