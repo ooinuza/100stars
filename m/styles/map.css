@@ -336,13 +336,14 @@
     display: inline-block;
     width: auto !important;
     max-width: calc(100% - 28px);
-
-    padding: 6px 8px;
+    
     border-radius: 10px;
 
-    font-size: 12px;
-    line-height: 1.2;
+    font-size: clamp(10px, 2.8vw, 12px);
+    line-height: 1.1;
+    padding: 4px 6px;
     text-align: left;
+    opacity: .65;
 
     background: rgba(0,0,0,.18) !important;
     backdrop-filter: blur(6px);
@@ -360,10 +361,11 @@
     display: block;
     width: auto;
 
-    font-size: 11px;
-    line-height: 1.2;
+    font-size: clamp(10px, 2.8vw, 12px);
+    line-height: 1.1;
+    padding: 4px 6px;
     text-align: left;
-    opacity: .45;
+    opacity: .65;
   }
   
   .zoomBox{
