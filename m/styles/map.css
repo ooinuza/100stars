@@ -52,13 +52,17 @@
 #zoomSlider{ width: 160px; }
 
 /* ===== Layout ===== */
+.panel {
+  width: 100%;
+}
+
 .layout{
   height:100%;
   display:grid;
   grid-template-columns: 1fr; /* ← 1カラム化 */
   gap: 12px;
-  padding: 100px 12px 12px; /* 少し圧縮 */
-}
+  padding: 90px 12px 16px;
+  }
 
 #map {
   position: relative;
