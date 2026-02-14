@@ -329,3 +329,57 @@
 .world{ z-index:1; }
 
 .layout{ grid-template-columns: 1fr !important; }
+
+/* ===== Mobile layout overrides ===== */
+@media (max-width: 640px){
+
+  /* 1カラムにする */
+  .layout{
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+    padding: 96px 12px 12px; /* topbar分だけ残す */
+  }
+
+  /* 右パネルを“下のカード”にする */
+  .panel{
+    width: 100%;
+    max-width: none;
+    border-radius: 18px;
+  }
+
+  /* mapを最低限見える高さに */
+  #map{
+    height: 44vh;   /* 上はマップ、下はパネル */
+    min-height: 280px;
+  }
+
+  /* topbar内の右上ボタン詰まり対策 */
+  .topbar{
+    align-items: center;
+  }
+
+  /* ロゴが大きいときの折り返し・詰まり対策 */
+  .brand .logo{
+    font-size: 34px; /* clampを使ってるなら不要 */
+  }
+  .subtitle{
+    font-size: 11px;
+  }
+
+  /* hint / copyright がボタンと干渉しがちなので少し上げる */
+  .hint{ bottom: 54px; }
+  .copyright{ bottom: 54px; }
+
+  /* ズームUIは右下固定のままでOKだが、少し小さくして圧を下げる */
+  .zoomBox{
+    transform: scale(.92);
+    transform-origin: right bottom;
+  }
+}
+
+@media (max-width: 640px){
+  .panel{
+    max-height: 48vh;
+    overflow: auto;
+  }
+}
