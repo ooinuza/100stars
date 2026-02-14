@@ -341,6 +341,31 @@
     padding: 96px 12px 12px;        /* topbar分 */
     align-content: start;
   }
+  
+  
+  /* hint を下げる（マップの下端ギリギリへ） */
+  .hint{
+    left: 14px;
+    right: 14px;
+    bottom: 10px;
+    font-size: 12px;
+    opacity: .7;
+    text-align: left;
+      border-radius: 10px;
+  background: rgba(0,0,0,.18);
+  backdrop-filter: blur(6px);
+  }
+
+  /* copyright を hint の「さらに下」に左寄せで置く */
+  .copyright{
+    left: 14px;
+    right: auto;
+    bottom: -6px; /* hintの下に出す。見切れるなら 0px に */
+    font-size: 11px;
+    opacity: .45;
+    text-align: left;
+  }
+}
 
   /* マップ領域を確実に確保 */
  #map{
