@@ -62,11 +62,10 @@ function boot(){
   bindEvents();
   render();
 
-  // mobile: pinch-to-zoom + iOS gesture zoom suppression
+  // mobile: pinch-to-zoom + iOS Safari page-zoom suppression
+  suppressIOSPageZoom();
   installPinchZoom(mapEl);
-  ["gesturestart","gesturechange","gestureend"].forEach(type => {
-    mapEl.addEventListener(type, (e) => e.preventDefault(), { passive: false });
-  });
+
   // auto select Me
   const me = data.nodes.find(n => n.isMe);
   if (me) select(me.id);
@@ -348,6 +347,8 @@ function bindEvents(){
   nodesEl.addEventListener("pointerdown", (e) => {
     // 左クリック/主ボタンのみ
     if (e.button !== 0) return;
+    // pinch中はpointerイベントを無視（iOSで誤作動しやすい）
+    if (isPinching) return;
 
     const nodeEl = e.target.closest(".node");
     if (!nodeEl) return;
@@ -430,6 +431,7 @@ function bindEvents(){
 
   mapEl.addEventListener("pointerdown", (e) => {
     if (e.target.closest(".node")) return;
+    if (isPinching) return;
     panning = true;
     mapEl.setPointerCapture(e.pointerId);
     panStart = { x: e.clientX, y: e.clientY, ox: view.ox, oy: view.oy };

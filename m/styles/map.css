@@ -3,7 +3,7 @@
   position:fixed;
   top:0; left:0; right:0;
   display:flex;
-  align-items:center;
+  align-items:flex-end;
   justify-content:space-between;
   padding: 18px 18px 14px;
   gap:12px;
@@ -13,16 +13,16 @@
 .topbar > *{ pointer-events:auto; }
 
 .brand .logo{
-  font-size: clamp(34px, 3.6vw, 52px);
+  font-size: clamp(32px, 4vw, 48px);
   font-weight: 700;
   letter-spacing: .02em;
 }
+
 .logoStar{ color: rgba(233,238,255,.85); }
 .subtitle{
-  margin-top: 4px;
-  color: var(--muted);
-  letter-spacing: .28em;
-  font-size: 12px;
+  font-size: 13px;
+  letter-spacing: .3em;
+  opacity: .8;
 }
 
 .topControls{
@@ -52,17 +52,13 @@
 #zoomSlider{ width: 160px; }
 
 /* ===== Layout ===== */
-.panel {
-  width: 100%;
-}
-
 .layout{
   height:100%;
   display:grid;
-  grid-template-columns: 1fr; /* ← 1カラム化 */
-  gap: 12px;
-  padding: 84px 12px 12px;
-  }
+  grid-template-columns: 1fr 360px;
+  gap: 14px;
+  padding: 108px 14px 14px; /* ← 76px → 108px くらいに */
+}
 
 #map {
   position: relative;
@@ -80,6 +76,15 @@
 
 #wires {
   pointer-events: none;
+}
+.hint{
+  position:absolute;
+  left: 14px;
+  bottom: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  opacity: .85;
+  z-index: 5;
 }
 
 /* ===== World (pan/zoom target) ===== */
@@ -118,7 +123,6 @@
   background: var(--p1);
   box-shadow: 0 0 18px rgba(255,255,255,.35);
   position: relative;
-  transition: box-shadow .22s ease, filter .22s ease, transform .22s ease;
 }
 
 .node .label{
@@ -135,32 +139,31 @@
 
 /* click glow */
 .node.selected .dot{
-  filter: brightness(1.12);
   box-shadow:
-    0 0 0 4px rgba(122,162,255,.22),
-    0 0 26px rgba(122,162,255,.55),
-    0 0 80px rgba(122,162,255,.25);
+    0 0 0 4px rgba(122,162,255,.25),
+    0 0 22px rgba(122,162,255,.55),
+    0 0 48px rgba(122,162,255,.18);
 }
 
+/* pulseは別レイヤーで追加 */
 .node.selected .dot::after{
   content:"";
   position:absolute;
-  inset:-16px;
+  inset:-12px;
   border-radius:999px;
   pointer-events:none;
 
   box-shadow:
-    0 0 0 6px rgba(122,162,255,.10),
-    0 0 40px rgba(122,162,255,.35),
-    0 0 120px rgba(122,162,255,.18);
+    0 0 0 6px rgba(122,162,255,.15),
+    0 0 30px rgba(122,162,255,.35);
 
-  animation: selectedBreath 2.8s ease-in-out infinite;
+  animation: pulseHalo 2.4s ease-in-out infinite;
 }
 
-@keyframes selectedBreath{
-  0%   { transform: scale(.92); opacity:.45; }
-  50%  { transform: scale(1.14); opacity:.95; }
-  100% { transform: scale(.92); opacity:.45; }
+@keyframes pulseHalo{
+  0%   { transform: scale(.9); opacity:.5; }
+  50%  { transform: scale(1.15); opacity:1; }
+  100% { transform: scale(.9); opacity:.5; }
 }
 
 /* Priority colors */
@@ -179,57 +182,6 @@
 .node.p5 .dot{
   animation: pulse5 1.8s ease-in-out infinite;
 }
-
-/* ===== Completed (achieved) ===== */
-.node.completed .dot{
-  background: radial-gradient(circle at 30% 30%, rgba(170,220,255,.95), rgba(70,140,255,.85));
-  box-shadow:
-    0 0 0 5px rgba(90,170,255,.18),
-    0 0 26px rgba(90,170,255,.60),
-    0 0 70px rgba(90,170,255,.20);
-  animation: none;
-}
-
-/* keep a clear focus ring when selected + completed */
-.node.completed.selected .dot{
-  box-shadow:
-    0 0 0 4px rgba(122,162,255,.28),
-    0 0 0 10px rgba(90,170,255,.14),
-    0 0 28px rgba(90,170,255,.70),
-    0 0 90px rgba(90,170,255,.22);
-}
-
-/* tiny sparkles around the dot (B plan) */
-.node.completed .dot::before{
-  content:"";
-  position:absolute;
-  inset:-18px;
-  border-radius:999px;
-  pointer-events:none;
-  opacity:.75;
-
-  background-image:
-    radial-gradient(2px 2px at 18% 30%, rgba(210,240,255,.95) 0 60%, transparent 61%),
-    radial-gradient(1.5px 1.5px at 70% 25%, rgba(190,230,255,.85) 0 60%, transparent 61%),
-    radial-gradient(1.5px 1.5px at 82% 68%, rgba(210,240,255,.90) 0 60%, transparent 61%),
-    radial-gradient(1px 1px at 30% 78%, rgba(170,220,255,.80) 0 60%, transparent 61%),
-    radial-gradient(1px 1px at 55% 55%, rgba(230,250,255,.70) 0 60%, transparent 61%);
-  filter: blur(.2px);
-  animation: twinkle 3.2s ease-in-out infinite;
-}
-
-@keyframes twinkle{
-  0%   { transform: rotate(0deg) scale(.98); opacity:.45; }
-  40%  { opacity:.85; }
-  60%  { transform: rotate(18deg) scale(1.02); opacity:.70; }
-  100% { transform: rotate(0deg) scale(.98); opacity:.45; }
-}
-
-/* optional: label feels "complete" */
-.node.completed .label{
-  color: rgba(215,235,255,.90);
-}
-
 
 /* Me（Priorityより後に置いて上書きされないようにする） */
 .node.me .dot{
@@ -253,23 +205,6 @@
 .wire{
   stroke: rgba(233,238,255,.22);
   stroke-width: 1;
-}
-
-/* ---- Selected node pulse ---- */
-
-@keyframes pulseGlow {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 8px rgba(255,255,255,0.4);
-  }
-  50% {
-    transform: scale(1.12);
-    box-shadow: 0 0 18px rgba(255,255,255,0.9);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 8px rgba(255,255,255,0.4);
-  }
 }
 
 /* ===== Background stars (CSS only) ===== */
@@ -305,76 +240,18 @@
   filter: blur(.45px);
 }
 
-/* 星屑 < world（線と星） */
-.world{ z-index:1; }
+/* レイヤー順（bg-stars < wires < nodes） */
+#wires { z-index: 1; }
+#nodes { z-index: 2; }
 
-/* ===== Mobile ===== */
-@media (max-width: 640px){
-  #map{
-    touch-action: none;              /* ブラウザのピンチ/スクロール制御を抑制 */
-    overscroll-behavior: none;
-  }
-}
-
-  .layout{
-    grid-template-columns: 1fr;
-    grid-template-rows: 44vh auto;
-    padding: 96px 12px 12px;
-  }
-
-  #map{
-    position: relative;
-  }
-
-  .panel{
-    max-height: 60vh;
-    overflow: auto;
-  }
-
-    .hint{
-    position: absolute;
-    left: 14px;
-    right: 14px;
-    bottom: 14px;
-    top: auto !important;
-
-    display: inline-block;
-    width: auto !important;
-    max-width: calc(100% - 28px);
-    
-    border-radius: 10px;
-
-    font-size: clamp(10px, 2.8vw, 12px);
-    line-height: 1.1;
-    padding: 4px 6px;
-    text-align: left;
-    opacity: .65;
-
-    background: rgba(0,0,0,.18) !important;
-    backdrop-filter: blur(6px);
-
-    height: auto !important;
-  }
-
-  .copyright{
-    position: absolute;
-    left: 14px !important;
-    right: unset !important;
-    bottom: -2px;          /* hintの“下”に出す */
-    top: auto !important;
-
-    display: block;
-    width: auto;
-
-    font-size: clamp(10px, 2.8vw, 12px);
-    line-height: 1.1;
-    padding: 4px 6px;
-    text-align: left;
-    opacity: .65;
-  }
-  
-  .zoomBox{
-    transform: scale(.92);
-    transform-origin: right bottom;
-  }
+/* コピーライト */
+.copyright{
+  position:absolute;
+  right:14px;
+  bottom:12px;
+  font-size:11px;
+  color: rgba(233,238,255,.45);
+  letter-spacing:.08em;
+  z-index:5;
+  pointer-events:none;
 }
