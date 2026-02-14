@@ -81,15 +81,6 @@
 #wires {
   pointer-events: none;
 }
-.hint{
-  position:absolute;
-  left: 14px;
-  bottom: 12px;
-  font-size: 12px;
-  color: var(--muted);
-  opacity: .85;
-  z-index: 5;
-}
 
 /* ===== World (pan/zoom target) ===== */
 .world{
@@ -281,17 +272,6 @@
   }
 }
 
-.copyright{
-  position:absolute;
-  right:14px;
-  bottom:12px;
-  font-size:11px;
-  color: rgba(233,238,255,.45);
-  letter-spacing:.08em;
-  z-index:5;
-  pointer-events:none;
-}
-
 /* ===== Background stars (CSS only) ===== */
 #bg-stars{
   position:absolute;
@@ -336,51 +316,46 @@
     height: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 34vh auto;  /* 上：マップ / 下：パネル */
+    grid-template-rows: 34vh auto;   /* 上：マップ / 下：パネル */
     gap: 10px;
-    padding: 96px 12px 12px;        /* topbar分 */
+    padding: 96px 12px 12px;         /* topbar分 */
     align-content: start;
   }
-  
-  
-  /* hint を下げる（マップの下端ギリギリへ） */
+
+  /* マップ領域を確実に確保 */
+  #map{
+    height: 100%;
+    min-height: 200px;
+  }
+
+  /* パネルは下でスクロール（panel.css側より強く勝つ） */
+  .panel{
+    max-height: 60vh !important;
+    overflow: auto !important;
+  }
+
+  /* hint を下げる */
   .hint{
     left: 14px;
     right: 14px;
-    bottom: 10px;
+    bottom: 18px;                    /* もっと下げる */
     font-size: 12px;
     opacity: .7;
     text-align: left;
-      border-radius: 10px;
-  background: rgba(0,0,0,.18);
-  backdrop-filter: blur(6px);
+    padding: 6px 8px;
+    border-radius: 10px;
+    background: rgba(0,0,0,.18);
+    backdrop-filter: blur(6px);
   }
 
-  /* copyright を hint の「さらに下」に左寄せで置く */
+  /* copyright を hint の下に左寄せ */
   .copyright{
     left: 14px;
     right: auto;
-    bottom: -6px; /* hintの下に出す。見切れるなら 0px に */
+    bottom: 4px;                     /* hintの下 */
     font-size: 11px;
     opacity: .45;
     text-align: left;
-  }
-}
-
-  /* マップ領域を確実に確保 */
- #map{
-  height: 100%;
-  min-height: 200px;
-}
-
-  /* パネルは下でスクロール */
-  .panel{
-    max-height: none;               /* map.css側で固定しない */
-  }
-
-  /* hint/copyright はマップ内に居るので少し上げる */
-  .hint, .copyright{
-    bottom: 54px;
   }
 
   /* ズームUIは少し小さく */
