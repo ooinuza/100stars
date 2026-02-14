@@ -408,3 +408,14 @@
 @media (max-width: 640px){
   #map{ outline: 3px solid rgba(0,255,255,.9); }
 }
+
+@media (max-width: 640px){
+  .layout{
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 40vh auto !important; /* 上:マップ / 下:パネル */
+  }
+
+  #map{
+    min-height: 240px !important;
+  }
+}

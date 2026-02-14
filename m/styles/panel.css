@@ -91,3 +91,11 @@
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
+
+@media (max-width: 640px){
+  /* パネルが画面を食い尽くすのを止める（強制） */
+  .panel{
+    max-height: 55vh !important;
+    overflow: auto !important;
+  }
+}
