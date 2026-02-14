@@ -312,6 +312,9 @@
 
 /* ===== Mobile (single source of truth) ===== */
 @media (max-width: 640px){
+  .hint, .copyright{ z-index: 3; }
+}
+
   .layout{
     height: 100%;
     display: grid;
@@ -323,10 +326,7 @@
   }
 
   /* マップ領域を確実に確保 */
-  #map{
-    height: 100%;
-    min-height: 200px;
-  }
+  #map{ position: relative; }
 
   /* パネルは下でスクロール（panel.css側より強く勝つ） */
   .panel{
@@ -341,21 +341,8 @@
     right: 14px;
     bottom: 18px;
 
-    display: inline-block;
-    width: auto;
-    max-width: calc(100% - 28px);
-
-    font-size: 12px;
-    line-height: 1.2;
-    opacity: .72;
-    text-align: left;
-
-    padding: 6px 8px;
-    border-radius: 10px;
-    background: rgba(0,0,0,.18) !important;
-    backdrop-filter: blur(6px);
-
-    height: auto;
+    top: auto !important;      /* ← 上に吸われるのを殺す */
+    margin-top: 0 !important;
   }
 
   /* copyright を hint の下に左寄せ */
@@ -365,11 +352,8 @@
     right: unset !important;
     bottom: 4px;
 
-    font-size: 11px;
-    opacity: .45;
-    text-align: left;
-    width: auto;
-    height: auto;
+    top: auto !important;      /* ← これも同じ */
+    margin-top: 0 !important;
   }
 
   /* ズームUIは少し小さく */
