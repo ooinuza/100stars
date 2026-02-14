@@ -308,55 +308,40 @@
 /* 星屑 < world（線と星） */
 .world{ z-index:1; }
 
-.layout{ grid-template-columns: 1fr !important; }
-
-/* ===== Mobile (single source of truth) ===== */
+/* ===== Mobile ===== */
 @media (max-width: 640px){
-  .hint, .copyright{ z-index: 3; }
-}
 
   .layout{
-    height: 100%;
-    display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 44vh auto; /* ← 星座を広く */
-    gap: 10px;
-    padding: 96px 12px 12px;         /* topbar分 */
-    align-content: start;
+    grid-template-rows: 44vh auto;
+    padding: 96px 12px 12px;
   }
 
-  /* マップ領域を確実に確保 */
-  #map{ position: relative; }
+  #map{
+    position: relative;
+  }
 
-  /* パネルは下でスクロール（panel.css側より強く勝つ） */
   .panel{
-    max-height: 60vh !important;
-    overflow: auto !important;
+    max-height: 60vh;
+    overflow: auto;
   }
 
-  /* hint を下げる */
   .hint{
     position: absolute;
     left: 14px;
     right: 14px;
     bottom: 18px;
-
-    top: auto !important;      /* ← 上に吸われるのを殺す */
-    margin-top: 0 !important;
+    top: auto;
   }
 
-  /* copyright を hint の下に左寄せ */
   .copyright{
     position: absolute;
-    left: 14px !important;
-    right: unset !important;
+    left: 14px;
+    right: auto;
     bottom: 4px;
-
-    top: auto !important;      /* ← これも同じ */
-    margin-top: 0 !important;
+    top: auto;
   }
 
-  /* ズームUIは少し小さく */
   .zoomBox{
     transform: scale(.92);
     transform-origin: right bottom;
