@@ -333,14 +333,13 @@
   gap: 10px;
 }
 
-  #map{
-    height: 44vh;
-    min-height: 240px;
-  }
+#map{
+  height: 100%;
+  min-height: 240px;
+}
 
   .panel{
-    max-height: calc(100vh - 44vh - 96px);
-    overflow: auto;
+    max-height: calc(100vh - 60vh - 96px);
   }
 
   .hint{
