@@ -326,18 +326,20 @@
 
 /* ===== Mobile (m only) ===== */
 @media (max-width: 900px){
-  .layout{
-    outline: 6px solid hotpink;
-    grid-template-columns: 1fr;
-    grid-template-rows: 44vh auto;
-    padding: 96px 12px 12px;
-    gap: 10px;
-  }
+.layout{
+  grid-template-columns: 1fr;
+  grid-template-rows: 44vh auto;
+  padding: 96px 12px 12px;
+  gap: 10px;
+}
+
+#map{
+  outline: 6px solid hotpink;
+}
 
   #map{
     height: 44vh;
     min-height: 240px;
-    outline: 6px solid hotpink;
   }
 
   .panel{
