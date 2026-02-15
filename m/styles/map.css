@@ -334,6 +334,12 @@
   height: 100dvh;
 }
 
+.zoomBox{
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+}
+
 #map{
   height: 60vh;
   min-height: 240px;
