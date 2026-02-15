@@ -1,4 +1,4 @@
-export const STORAGE_KEY = "100stars_mobile_v1";
+export const STORAGE_KEY = "100stars_v2";
 
 export const DEFAULT_CATEGORIES = [
   "Health",
