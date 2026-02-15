@@ -421,47 +421,6 @@ nodesEl.addEventListener("pointercancel", (e) => {
   endNodeDrag(true);
 });
 
-nodesEl.addEventListener("lostpointercapture", () => {
-  endNodeDrag(true);
-});
-    
-      // ✅ しきい値：一定以上動いたら「ドラッグ開始」
-      const dx = e.clientX - drag.startClient.x;
-      const dy = e.clientY - drag.startClient.y;
-      if (!drag.active) {
-        if (Math.hypot(dx, dy) < DRAG_THRESHOLD_PX) return;
-        drag.active = true;
-        // この時点で関連wireをキャッシュ（毎moveでqueryしない）
-        drag.wireEls = getAffectedWiresForNode(drag.id);
-      }
-  
-      const p = screenToWorld(e.clientX, e.clientY);
-      n.x = drag.startWorld.nx + (p.x - drag.startWorld.px);
-      n.y = drag.startWorld.ny + (p.y - drag.startWorld.py);
-  
-      // ドラッグ中は render() でDOMを作り直さない（pointer capture事故 & 重さ対策）
-      if (drag.nodeEl){
-        drag.nodeEl.style.left = `${n.x}px`;
-        drag.nodeEl.style.top  = `${n.y}px`;
-      }
-  
-      updateWiresForNode(drag.id, drag.wireEls);
-    });
-  
-    // ✅ 解除は多重で保険（取り逃し防止）
-    nodesEl.addEventListener("pointerup", (e) => {
-    if (drag.pointerId !== null && e.pointerId !== drag.pointerId) return;
-    endNodeDrag(true);
-  });
-  
-    nodesEl.addEventListener("pointercancel", (e) => {
-      if (drag.pointerId !== null && e.pointerId !== drag.pointerId) return;
-      endNodeDrag(true);
-    });
-  
-    nodesEl.addEventListener("lostpointercapture", () => {
-      endNodeDrag(true);
-    });
     // pan (drag background)
     let panning = false;
     let panStart = null;
