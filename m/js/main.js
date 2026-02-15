@@ -353,43 +353,77 @@ function bindEvents(){
       }
     }
   
-    nodesEl.addEventListener("pointerdown", (e) => {
-      // 左クリック/主ボタンのみ
-      if (e.button !== 0) return;
-  
-      const nodeEl = e.target.closest(".node");
-      if (!nodeEl) return;
-  
-      const id = nodeEl.dataset.id;
-      const n = findNode(data, id);
-      if (!n) return;
-  
-      // ここでは「候補」だけ作る（まだドラッグ開始しない）
-      drag.id = id;
-      drag.pointerId = e.pointerId;
-      drag.active = false;
-      drag.startClient = { x: e.clientX, y: e.clientY };
-  
-      const p = screenToWorld(e.clientX, e.clientY);
-      drag.startWorld = { px: p.x, py: p.y, nx: n.x, ny: n.y };
-  
-      // pointerup取り逃しを減らす: nodesEl は render() で消えないので capture 先を安定化
-      nodesEl.setPointerCapture(e.pointerId);
-  
-      // ドラッグ対象DOMを保持（ドラッグ中は render() しない）
-      drag.nodeEl = nodeEl;
-  
-      // テキスト選択などの事故防止（※タッチはスクロール/ピンチを殺しやすいので除外）
-      if (e.pointerType !== "touch") {
-      e.preventDefault();
-      }
-  
-    nodesEl.addEventListener("pointermove", (e) => {
-      if (!drag.id || !drag.startWorld || !drag.startClient) return;
-      if (drag.pointerId !== e.pointerId) return;
-  
-      const n = findNode(data, drag.id);
-      if (!n) return;
+nodesEl.addEventListener("pointerdown", (e) => {
+  // 左クリック/主ボタンのみ
+  if (e.button !== 0) return;
+
+  const nodeEl = e.target.closest(".node");
+  if (!nodeEl) return;
+
+  const id = nodeEl.dataset.id;
+  const n = findNode(data, id);
+  if (!n) return;
+
+  // ここでは「候補」だけ作る（まだドラッグ開始しない）
+  drag.id = id;
+  drag.pointerId = e.pointerId;
+  drag.active = false;
+  drag.startClient = { x: e.clientX, y: e.clientY };
+
+  const p = screenToWorld(e.clientX, e.clientY);
+  drag.startWorld = { px: p.x, py: p.y, nx: n.x, ny: n.y };
+
+  nodesEl.setPointerCapture(e.pointerId);
+  drag.nodeEl = nodeEl;
+
+  // テキスト選択などの事故防止（タッチは除外）
+  if (e.pointerType !== "touch") {
+    e.preventDefault();
+  }
+}); // ←これが無い/位置がズレてたのが原因
+
+
+nodesEl.addEventListener("pointermove", (e) => {
+  if (!drag.id || !drag.startWorld || !drag.startClient) return;
+  if (drag.pointerId !== e.pointerId) return;
+
+  const n = findNode(data, drag.id);
+  if (!n) return;
+
+  const dx = e.clientX - drag.startClient.x;
+  const dy = e.clientY - drag.startClient.y;
+
+  if (!drag.active) {
+    if (Math.hypot(dx, dy) < DRAG_THRESHOLD_PX) return;
+    drag.active = true;
+    drag.wireEls = getAffectedWiresForNode(drag.id);
+  }
+
+  const p = screenToWorld(e.clientX, e.clientY);
+  n.x = drag.startWorld.nx + (p.x - drag.startWorld.px);
+  n.y = drag.startWorld.ny + (p.y - drag.startWorld.py);
+
+  if (drag.nodeEl) {
+    drag.nodeEl.style.left = `${n.x}px`;
+    drag.nodeEl.style.top  = `${n.y}px`;
+  }
+
+  updateWiresForNode(drag.id, drag.wireEls);
+});
+
+nodesEl.addEventListener("pointerup", (e) => {
+  if (drag.pointerId !== null && e.pointerId !== drag.pointerId) return;
+  endNodeDrag(true);
+});
+
+nodesEl.addEventListener("pointercancel", (e) => {
+  if (drag.pointerId !== null && e.pointerId !== drag.pointerId) return;
+  endNodeDrag(true);
+});
+
+nodesEl.addEventListener("lostpointercapture", () => {
+  endNodeDrag(true);
+});
   
       // ✅ しきい値：一定以上動いたら「ドラッグ開始」
       const dx = e.clientX - drag.startClient.x;
