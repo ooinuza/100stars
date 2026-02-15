@@ -379,9 +379,10 @@ function bindEvents(){
       // ドラッグ対象DOMを保持（ドラッグ中は render() しない）
       drag.nodeEl = nodeEl;
   
-      // テキスト選択などの事故防止
+      // テキスト選択などの事故防止（※タッチはスクロール/ピンチを殺しやすいので除外）
+      if (e.pointerType !== "touch") {
       e.preventDefault();
-    });
+      }
   
     nodesEl.addEventListener("pointermove", (e) => {
       if (!drag.id || !drag.startWorld || !drag.startClient) return;
@@ -454,9 +455,12 @@ function bindEvents(){
   
     // wheel zoom
     mapEl.addEventListener("wheel", (e) => {
-      e.preventDefault();
-      const delta = e.deltaY > 0 ? -0.06 : 0.06;
-      setZoom(view.scale + delta);
+    // パネル上のホイールは奪わない（トラックパッド等）
+    if (e.target && e.target.closest && e.target.closest("#panel")) return;
+
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.06 : 0.06;
+    setZoom(view.scale + delta);
     }, { passive:false });
   
     // zoom buttons/slider
