@@ -281,6 +281,7 @@ function renderPanel(){
     setPriorityUI(3);
     deleteBtn.disabled = true;
     addChildBtn.disabled = true;
+    addChildBtn.textContent = "＋ Add child star";
     saveBtn.disabled = true;
     return;
   }
@@ -299,6 +300,7 @@ function renderPanel(){
 
   deleteBtn.disabled = !!n.isMe; // Meは消さない
   addChildBtn.disabled = false;
+  addChildBtn.textContent = n.isMe ? "＋ Add category" : "＋ Add child star";
   saveBtn.disabled = false;
 }
 
@@ -521,31 +523,39 @@ function bindEvents(){
       showToast("Saved ✓");
     });
   
-    // add child
-    addChildBtn.addEventListener("click", () => {
-      const parent = selectedId ? findNode(data, selectedId) : null;
-      if (!parent) return;
-  
-      const now = nowISO();
-      const id = makeId();
-      const ang = rand(0, Math.PI * 2);
-      const radius = rand(110, 190);
-  
-      const child = {
-        id,
-        title: "New star",
-        notes: "",
-        priority: 3,
-        parentId: parent.id,
-        x: parent.x + Math.cos(ang)*radius,
-        y: parent.y + Math.sin(ang)*radius,
-        lockedTitle: false,
-        completed: false,
-        isMe: false,
-        isCategory: false,
-        createdAt: now,
-        updatedAt: now,
-      };
+// add child
+addChildBtn.addEventListener("click", () => {
+  const parent = selectedId ? findNode(data, selectedId) : null;
+  if (!parent) return;
+
+  const now = nowISO();
+  const id = makeId();
+  const ang = rand(0, Math.PI * 2);
+  const radius = rand(110, 190);
+
+  const isNewCategory = !!parent.isMe;
+
+  const child = {
+    id,
+    title: isNewCategory ? "New category" : "New star",
+    notes: "",
+    priority: isNewCategory ? 1 : 3,
+    parentId: parent.id,
+    x: parent.x + Math.cos(ang)*radius,
+    y: parent.y + Math.sin(ang)*radius,
+    lockedTitle: isNewCategory ? true : false,
+    completed: false,
+    isMe: false,
+    isCategory: isNewCategory,
+    createdAt: now,
+    updatedAt: now,
+  };
+
+  data.nodes.push(child);
+  saveAll("addChild");
+  select(child.id);
+  showToast(isNewCategory ? "Added category ✦" : "Added ✦");
+});
   
       data.nodes.push(child);
       saveAll("addChild");
