@@ -335,9 +335,10 @@
 }
 
 .zoomBox{
-  position: absolute;
+  position: fixed;
   right: 12px;
-  bottom: 12px;
+  top: 108px;   /* 上に逃がす。hint/copyrightと干渉しない */
+  bottom: auto; /* bottom指定を無効化 */
 }
 
 #map{
