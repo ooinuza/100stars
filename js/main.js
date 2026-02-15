@@ -141,6 +141,7 @@ function nodeClass(n){
   const p = clamp(Number(n.priority || 1), 1, 5);
   const cls = ["node", `p${p}`];
   if (n.isMe) cls.push("me");
+  if (n.isCategory) cls.push("category"); // ← これだけ追加
   if (n.completed) cls.push("completed");
   if (n.id === selectedId) cls.push("selected");
   return cls.join(" ");

@@ -323,3 +323,11 @@
 
 /* 星屑 < world（線と星） */
 .world{ z-index:1; }
+
+/* Category（Meの子であるジャンル星） */
+.node.category .dot{
+  width: 18px;
+  height: 18px;
+  box-shadow: 0 0 22px rgba(255,255,255,.35);
+  background: var(--nodeColor, rgba(170, 200, 255, .95)); /* デフォ */
+}
