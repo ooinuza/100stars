@@ -34,7 +34,7 @@
 .zoomBox{
   position: fixed;
   right: 12px;
-  bottom: calc(40vh + 12px);
+  bottom: 12px;
 
   display:flex;
   align-items:center;
@@ -328,9 +328,10 @@
 @media (max-width: 900px){
 .layout{
   grid-template-columns: 1fr;
-  grid-template-rows: 60vh auto;
+  grid-template-rows: 60vh 1fr;
   padding: 96px 12px 12px;
   gap: 10px;
+  height: 100dvh;
 }
 
 #map{
@@ -339,10 +340,16 @@
 }
 
 .panel{
-  max-height: calc(100vh - 60vh - 96px);
+  height: 100%;
+  overflow: hidden;
+  padding-bottom: 84px;
+}
+
+.panelBody{
+  height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 84px;
+  min-height: 0;
 }
 
   .hint{
