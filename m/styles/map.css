@@ -337,15 +337,15 @@
 .zoomBox{
   position: fixed;
   right: 12px;
-  top: 96px;
+  top: 92px;
   bottom: auto;
 
-  padding: 4px 8px;      /* ← 小さく */
+  padding: 3px 6px;      /* ← 小さく */
   gap: 6px;              /* ← ボタン間隔を縮める */
 }
 
 #zoomSlider{
-  width: 110px;          /* ← 160 → 110 に縮小 */
+  width: 95px;          /* ← 160 → 110 に縮小 */
 }
 
 #map{
