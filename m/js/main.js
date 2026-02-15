@@ -380,7 +380,7 @@ nodesEl.addEventListener("pointerdown", (e) => {
   if (e.pointerType !== "touch") {
     e.preventDefault();
   }
-}); // ←これが無い/位置がズレてたのが原因
+});
 
 
 nodesEl.addEventListener("pointermove", (e) => {
@@ -424,7 +424,7 @@ nodesEl.addEventListener("pointercancel", (e) => {
 nodesEl.addEventListener("lostpointercapture", () => {
   endNodeDrag(true);
 });
-  
+    
       // ✅ しきい値：一定以上動いたら「ドラッグ開始」
       const dx = e.clientX - drag.startClient.x;
       const dy = e.clientY - drag.startClient.y;
