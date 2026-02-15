@@ -325,7 +325,7 @@
 .world{ z-index:1; }
 
 /* ===== Mobile (m only) ===== */
-@media (max-width: 640px){
+@media (max-width: 900px){
   .layout{
     outline: 6px solid hotpink;
     grid-template-columns: 1fr;
