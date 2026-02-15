@@ -238,8 +238,8 @@
 
 /* Me（Priorityより後に置いて上書きされないようにする） */
 .node.me .dot{
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   background: radial-gradient(circle at 30% 30%, var(--me2), var(--me1));
   box-shadow:
     0 0 0 7px rgba(90,150,255,.12),
@@ -328,4 +328,14 @@
 .node.category .dot{
   width: 20px;
   height: 20px;
+}
+
+/* カテゴリは priority 背景より優先して固定色にする */
+.node.category.p1 .dot,
+.node.category.p2 .dot,
+.node.category.p3 .dot,
+.node.category.p4 .dot,
+.node.category.p5 .dot{
+  background: rgba(195, 237, 255, 0.95);
+  box-shadow: 0 0 28px #e2e8fa99;
 }
