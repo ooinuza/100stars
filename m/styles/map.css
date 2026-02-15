@@ -351,11 +351,6 @@
 #map{
   height: 60vh;
   min-height: 240px;
-  touch-action: none;
-}
-
-#panel{
-  touch-action: pan-y;            /* ←追加：パネルは縦スクロールさせる */
 }
 
 .panel{
