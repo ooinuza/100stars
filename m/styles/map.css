@@ -337,6 +337,7 @@
   #map{
     height: 44vh;
     min-height: 240px;
+    outline: 6px solid hotpink;
   }
 
   .panel{
