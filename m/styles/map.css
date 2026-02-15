@@ -327,6 +327,7 @@
 /* ===== Mobile (m only) ===== */
 @media (max-width: 640px){
   .layout{
+    outline: 6px solid hotpink;
     grid-template-columns: 1fr;
     grid-template-rows: 44vh auto;
     padding: 96px 12px 12px;
@@ -359,10 +360,3 @@
   }
 }
 
-@media (max-width: 640px){
-  .layout{ outline: 6px solid hotpink; }
-  .layout{
-    grid-template-columns: 1fr;
-    ...
-  }
-}
