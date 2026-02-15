@@ -557,12 +557,6 @@ addChildBtn.addEventListener("click", () => {
   showToast(isNewCategory ? "Added category ✦" : "Added ✦");
 });
   
-      data.nodes.push(child);
-      saveAll("addChild");
-      select(child.id);
-      showToast("Added ✦");
-    });
-  
     // delete
     deleteBtn.addEventListener("click", () => {
       const n = selectedId ? findNode(data, selectedId) : null;
