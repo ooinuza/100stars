@@ -340,12 +340,12 @@
   top: 92px;
   bottom: auto;
 
-  padding: 3px 6px;      /* ← 小さく */
-  gap: 6px;              /* ← ボタン間隔を縮める */
+  padding: 3px 4px;      /* ← 小さく */
+  gap: 5px;              /* ← ボタン間隔を縮める */
 }
 
 #zoomSlider{
-  width: 95px;          /* ← 160 → 110 に縮小 */
+  width: 93px;          /* ← 160 → 110 に縮小 */
 }
 
 #map{
