@@ -238,8 +238,8 @@
 
 /* Me（Priorityより後に置いて上書きされないようにする） */
 .node.me .dot{
-  width: 22px;
-  height: 22px;
+  width: 25px;
+  height: 25px;
   background: radial-gradient(circle at 30% 30%, var(--me2), var(--me1));
   box-shadow:
     0 0 0 7px rgba(90,150,255,.12),
@@ -326,8 +326,8 @@
 
 /* Category（Meの子であるジャンル星） */
 .node.category .dot{
-  width: 18px;
-  height: 18px;
-  box-shadow: 0 0 22px rgba(255,255,255,.35);
-  background: var(--nodeColor, rgba(170, 200, 255, .95)); /* デフォ */
+  width: 20px;
+  height: 20px;
+  box-shadow: 0 0 28px #ffeaf499;
+  background: var(--nodeColor, rgba(255, 188, 204, 0.95)); /* デフォ */
 }
