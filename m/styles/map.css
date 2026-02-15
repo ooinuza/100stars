@@ -351,7 +351,7 @@
 #map{
   height: 60vh;
   min-height: 240px;
-  touch-action: pan-x pan-y;
+  touch-action: none;
 }
 
 #panel{
