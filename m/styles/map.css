@@ -358,3 +358,11 @@
     font-size: 11px;
   }
 }
+
+@media (max-width: 640px){
+  .layout{ outline: 6px solid hotpink; }
+  .layout{
+    grid-template-columns: 1fr;
+    ...
+  }
+}
