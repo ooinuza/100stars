@@ -328,13 +328,9 @@
 @media (max-width: 900px){
 .layout{
   grid-template-columns: 1fr;
-  grid-template-rows: 44vh auto;
+  grid-template-rows: 60vh auto;
   padding: 96px 12px 12px;
   gap: 10px;
-}
-
-#map{
-  outline: 6px solid hotpink;
 }
 
   #map{
