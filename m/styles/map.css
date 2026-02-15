@@ -351,7 +351,7 @@
 #map{
   height: 60vh;
   min-height: 240px;
-  touch-action: none;             /* ←追加：map操作をJSに渡す */
+  touch-action: pan-x pan-y;
 }
 
 #panel{
