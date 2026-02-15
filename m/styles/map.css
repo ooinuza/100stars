@@ -33,8 +33,8 @@
 
 .zoomBox{
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  right: 12px;
+  bottom: calc(40vh + 12px);
 
   display:flex;
   align-items:center;
@@ -338,10 +338,12 @@
   min-height: 240px;
 }
 
-  .panel{
-    max-height: calc(100vh - 60vh - 96px);
-    overflow: auto;
-  }
+.panel{
+  max-height: calc(100vh - 60vh - 96px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 84px;
+}
 
   .hint{
     left: 12px;
